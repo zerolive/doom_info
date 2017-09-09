@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DooM info</title>
+  </head>
+  <script src="https://unpkg.com/vue"></script>
+  <body>
+    <div id='app'>
+      <div v-for="column in columns">
+        {{ column.name }}
+        <div v-for="card in column.cards">
+        {{ card.name }}
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script type="text/javascript">
+    function httpGet(theUrl)
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", theUrl, false );
+        xmlHttp.send( null );
+        return JSON.parse(xmlHttp.responseText);
+    }
+
+    var cards = httpGet('https://api.trello.com/1/boards/RuyMGJ9R/cards');
+    var columns = httpGet('https://api.trello.com/1/boards/RuyMGJ9R/lists');
+
+    cards.forEach(function(card) {
+      var attachment = httpGet('https://api.trello.com/1/cards/'+ card.id +'/attachments/'+ card.idAttachmentCover)
+        card.image = attachment.url
+    });
+
+    columns.forEach(function(column){
+      column.cards = []
+      cards.forEach(function(card){
+        if(card.idList === column.id){
+          column.cards.push(card)
+        }
+      });
+    });
+
+    new Vue({
+      el: '#app',
+      data: {
+        columns: columns
+      }
+    })
+  </script>
+</html>
