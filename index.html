@@ -1,20 +1,9 @@
 <!DOCTYPE html>
 <html>
+  <link rel="stylesheet" href="assets/css/main.css">
   <head>
-    <style>
-      table {
-        width: 100%;
-      }
-      img {
-          width: 100%;
-      }
-      td.image {
-        width: 300px;
-      }
-    </style>
     <title>DooM info</title>
   </head>
-  <script src="https://unpkg.com/vue"></script>
   <body>
     <center><h1>DooM Info</h1></center>
     <p>
@@ -44,38 +33,9 @@
       </div>
     </p>
   </body>
-
-  <script type="text/javascript">
-    function httpGet(theUrl)
-    {
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", theUrl, false );
-        xmlHttp.send( null );
-        return JSON.parse(xmlHttp.responseText);
-    }
-
-    var cards = httpGet('https://api.trello.com/1/boards/RuyMGJ9R/cards');
-    var columns = httpGet('https://api.trello.com/1/boards/RuyMGJ9R/lists');
-
-    cards.forEach(function(card) {
-      var attachment = httpGet('https://api.trello.com/1/cards/'+ card.id +'/attachments/'+ card.idAttachmentCover)
-        card.image = attachment.url
-    });
-
-    columns.forEach(function(column){
-      column.cards = []
-      cards.forEach(function(card){
-        if(card.idList === column.id){
-          column.cards.push(card)
-        }
-      });
-    });
-
-    new Vue({
-      el: '#app',
-      data: {
-        columns: columns
-      }
-    })
-  </script>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="assets/js/httpGetter.js" type="text/javascript"></script>
+  <script src="assets/js/cards.js" type="text/javascript"></script>
+  <script src="assets/js/columns.js" type="text/javascript"></script>
+  <script src="assets/js/component.js" type="text/javascript"></script>
 </html>
