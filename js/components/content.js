@@ -1,5 +1,5 @@
 new Vue({
-  el: '#app',
+  el: '#content',
   data: {
     columns: columns
   }
