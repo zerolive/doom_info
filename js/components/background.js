@@ -1,12 +1,7 @@
-var background ="body { font: normal .80em 'trebuchet ms', arial, sans-serif; background: "+ board.prefs.backgroundColor +"; color: #000;}"
+var body = document.getElementsByTagName('body')[0];
+
+body.style.background = board.prefs.backgroundTopColor
 
 if (board.prefs.backgroundImage) {
-  background ="body { font: normal .80em 'trebuchet ms', arial, sans-serif; background: #000 url('"+ board.prefs.backgroundImage +"') repeat; color: #000;}"
+  body.style.backgroundImage = "url("+ board.prefs.backgroundImage +")"
 }
-
-new Vue({
-  el: '#background',
-  data: {
-    background: background
-  }
-})
